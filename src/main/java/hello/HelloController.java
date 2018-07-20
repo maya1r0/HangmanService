@@ -3,9 +3,7 @@ package hello;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Connection;
 import java.util.List;
@@ -33,5 +31,12 @@ public class HelloController {
     public void insertIntoLeaderboard(@RequestParam(value = "name")String name,@RequestParam(value = "score") int score) {
         jdbcTemplate.execute("insert into leaderboard values('"+name+"', "+score+")");
      }
+
+    @CrossOrigin
+    @RequestMapping(value = "/hello", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    String hello() {
+        return "Hello world!";
+    }
     
 }
