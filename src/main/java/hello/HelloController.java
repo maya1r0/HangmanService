@@ -16,21 +16,24 @@ public class HelloController {
 
     @RequestMapping("/")
     public String index() {
-//        jdbcTemplate.execute("insert into leaderboard values('name1', 0)");
         return "Greetings from Spring Boot!";
     }
     @RequestMapping("/get-leaderboard")
     public List<Map<String,Object>> getLeaderboard() {
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from  leaderboard");
-//        for(Map<String, Object> m: maps){
-//
-//        }
+
         return maps;
     }
     @RequestMapping("/insert-into-leaderboard")
     public void insertIntoLeaderboard(@RequestParam(value = "name")String name,@RequestParam(value = "score") int score) {
         jdbcTemplate.execute("insert into leaderboard values('"+name+"', "+score+")");
      }
+
+    @CrossOrigin
+    @RequestMapping(value = "/store-username", method = RequestMethod.POST)
+    public void storeUsername(@RequestParam(value = "name")String name) {
+        jdbcTemplate.execute("insert into player_info values('"+name+"', 0, 0)");
+    }
 
     @CrossOrigin
     @RequestMapping(value = "/hello", method = RequestMethod.GET, produces = "application/json")
