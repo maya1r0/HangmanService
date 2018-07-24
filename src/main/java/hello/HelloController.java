@@ -30,7 +30,7 @@ public class HelloController {
      }
 
     @CrossOrigin
-    @RequestMapping(value = "/store-username", method = RequestMethod.POST)
+    @RequestMapping(value = "/store-username")
     public void storeUsername(@RequestParam(value = "name")String name) {
         jdbcTemplate.execute("insert into player_info values('"+name+"', 0, 0)");
     }
