@@ -50,6 +50,12 @@ public class HelloController {
         }
     }
 
+    @CrossOrigin
+    @RequestMapping("/reset-current-streak")
+    public void resetCurrStreak(@RequestParam(value = "name") String playerName) {
+        jdbcTemplate.execute("UPDATE player_info SET current_streak = 0 WHERE name = '" + playerName + "'");
+    }
+
 
     @CrossOrigin
     @RequestMapping(value = "/hello", method = RequestMethod.GET, produces = "application/json")
