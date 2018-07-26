@@ -56,6 +56,13 @@ public class HelloController {
         jdbcTemplate.execute("UPDATE player_info SET current_streak = 0 WHERE name = '" + playerName + "'");
     }
 
+    @CrossOrigin
+    @RequestMapping("/get-current-streak")
+    public int getCurrStreak(@RequestParam(value = "name") String playerName) {
+        int currStreak = jdbcTemplate.queryForInt("select current_streak from player_info WHERE name = '" + playerName + "'");
+        return currStreak;
+    }
+
 
     @CrossOrigin
     @RequestMapping(value = "/hello", method = RequestMethod.GET, produces = "application/json")
