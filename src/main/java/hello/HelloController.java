@@ -61,6 +61,13 @@ public class HelloController {
         return currStreak;
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/get-num-entries", method = RequestMethod.GET, produces = "application/json")
+    public int getNumEntries () {
+        int numEntries = jdbcTemplate.queryForInt("select count (name) from player_info");
+        return numEntries;
+    }
+
 
     @CrossOrigin
     @RequestMapping(value = "/hello", method = RequestMethod.GET, produces = "application/json")
