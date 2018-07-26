@@ -2,10 +2,8 @@ package hello;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +55,7 @@ public class HelloController {
     }
 
     @CrossOrigin
-    @RequestMapping("/get-current-streak")
+    @RequestMapping(value = "/get-current-streak", method = RequestMethod.GET, produces = "application/json")
     public int getCurrStreak(@RequestParam(value = "name") String playerName) {
         int currStreak = jdbcTemplate.queryForInt("select current_streak from player_info WHERE name = '" + playerName + "'");
         return currStreak;
