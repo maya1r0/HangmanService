@@ -29,6 +29,13 @@ public class HelloController {
         jdbcTemplate.execute("insert into leaderboard values('"+name+"', "+score+")");
      }
 
+    @RequestMapping("/get-table")
+    public List<Map<String,Object>> getTable() {
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from  player_info");
+
+        return maps;
+    }
+
     @CrossOrigin
     @RequestMapping(value = "/store-username")
     public void storeUsername(@RequestParam(value = "name")String name) {
