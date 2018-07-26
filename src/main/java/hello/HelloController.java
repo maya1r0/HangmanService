@@ -40,13 +40,13 @@ public class HelloController {
     @CrossOrigin
     @RequestMapping("/up-streaks")
     public void upStreaks(@RequestParam(value = "name") String playerName) {
-        int currStreak = jdbcTemplate.queryForInt("select current_streak from player_info WHERE name = " + playerName) + 1;
-        int maxStreak = jdbcTemplate.queryForInt("select max_streak from player_info WHERE name = playerName");
+        int currStreak = jdbcTemplate.queryForInt("select current_streak from player_info WHERE name = '" + playerName+"'") + 1;
+        int maxStreak = jdbcTemplate.queryForInt("select max_streak from player_info WHERE name = '" + playerName + "'") ;
         if (currStreak >= maxStreak) {
-            jdbcTemplate.execute("UPDATE player_info SET current_streak =" + currStreak + ", max_streak = " + currStreak + "WHERE name = " + playerName);
+            jdbcTemplate.execute("UPDATE player_info SET current_streak =" + currStreak + ", max_streak = " + currStreak + "WHERE name = '" + playerName + "'");
         }
         else{
-            jdbcTemplate.execute("UPDATE player_info SET current_streak =" + currStreak + " WHERE name = " + playerName);
+            jdbcTemplate.execute("UPDATE player_info SET current_streak =" + currStreak + " WHERE name = '" + playerName + "'");
         }
     }
 
