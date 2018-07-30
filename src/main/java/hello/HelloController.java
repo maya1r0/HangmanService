@@ -10,7 +10,8 @@ import java.util.Map;
 @RestController
 public class HelloController {
 
-    @Autowired private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @RequestMapping("/")
     public String index() {
@@ -18,39 +19,38 @@ public class HelloController {
     }
 
     @RequestMapping("/get-leaderboard")
-    public List<Map<String,Object>> getLeaderboard() {
+    public List<Map<String, Object>> getLeaderboard() {
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from  leaderboard");
 
         return maps;
     }
 
     @RequestMapping("/insert-into-leaderboard")
-    public void insertIntoLeaderboard(@RequestParam(value = "name")String name,@RequestParam(value = "score") int score) {
-        jdbcTemplate.execute("insert into leaderboard values('"+name+"', "+score+")");
-     }
+    public void insertIntoLeaderboard(@RequestParam(value = "name") String name, @RequestParam(value = "score") int score) {
+        jdbcTemplate.execute("insert into leaderboard values('" + name + "', " + score + ")");
+    }
 
+    @CrossOrigin
     @RequestMapping("/get-table")
-    public List<Map<String,Object>> getTable() {
+    public List<Map<String, Object>> getTable() {
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from  player_info");
-
         return maps;
     }
 
     @CrossOrigin
     @RequestMapping(value = "/store-username")
-    public void storeUsername(@RequestParam(value = "name")String name) {
-        jdbcTemplate.execute("insert into player_info values('"+name+"', 0, 0)");
+    public void storeUsername(@RequestParam(value = "name") String name) {
+        jdbcTemplate.execute("insert into player_info values('" + name + "', 0, 0)");
     }
 
     @CrossOrigin
     @RequestMapping("/up-streaks")
     public void upStreaks(@RequestParam(value = "name") String playerName) {
-        int currStreak = jdbcTemplate.queryForInt("select current_streak from player_info WHERE name = '" + playerName+"'") + 1;
-        int maxStreak = jdbcTemplate.queryForInt("select max_streak from player_info WHERE name = '" + playerName + "'") ;
+        int currStreak = jdbcTemplate.queryForInt("select current_streak from player_info WHERE name = '" + playerName + "'") + 1;
+        int maxStreak = jdbcTemplate.queryForInt("select max_streak from player_info WHERE name = '" + playerName + "'");
         if (currStreak >= maxStreak) {
             jdbcTemplate.execute("UPDATE player_info SET current_streak =" + currStreak + ", max_streak = " + currStreak + "WHERE name = '" + playerName + "'");
-        }
-        else{
+        } else {
             jdbcTemplate.execute("UPDATE player_info SET current_streak =" + currStreak + " WHERE name = '" + playerName + "'");
         }
     }
@@ -70,7 +70,7 @@ public class HelloController {
 
     @CrossOrigin
     @RequestMapping(value = "/get-num-entries", method = RequestMethod.GET, produces = "application/json")
-    public int getNumEntries () {
+    public int getNumEntries() {
         int numEntries = jdbcTemplate.queryForInt("select count (name) from player_info");
         return numEntries;
     }
@@ -82,5 +82,5 @@ public class HelloController {
     String hello() {
         return "Hello world!";
     }
-    
+
 }
