@@ -31,7 +31,7 @@ public class HelloController {
     }
 
     @CrossOrigin
-    @RequestMapping("/get-table")
+    @RequestMapping(value = "/get-table", method = RequestMethod.GET, produces = "application/json")
     public List<Map<String, Object>> getTable() {
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("select * from  player_info");
         return maps;
